@@ -1,0 +1,24 @@
+import { forwardRef, type ButtonHTMLAttributes } from "react";
+import { BUTTON_STYLE } from "../../constants/styles";
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  styleType: "login";
+  text: string;
+  className?: string;
+}
+
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className = "", styleType, text }, ref) => {
+    const inputStyles = BUTTON_STYLE[styleType](className);
+
+    return (
+      <button ref={ref} className={inputStyles}>
+        {text}
+      </button>
+    );
+  }
+);
+
+Button.displayName = "Button";
+
+export default Button;

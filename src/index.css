@@ -5,3 +5,10 @@
   font-weight: normal;
   font-style: normal;
 }
+
+body {
+  max-width: 375px;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--black);
+}
