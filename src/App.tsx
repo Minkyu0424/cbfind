@@ -1,11 +1,8 @@
 import "./App.css";
+import AppRouter from "./routes/AppRouter";
 
 function App() {
-  return (
-    <>
-      <h1 className="font-yangjin">오다주움</h1>
-    </>
-  );
+  return <AppRouter />;
 }
 
 export default App;
