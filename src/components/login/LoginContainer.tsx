@@ -1,13 +1,23 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../common/Button";
 import Input from "../common/Input";
 
 const LoginContainer = () => {
+  const navigate = useNavigate();
   const [loginForm, setLoginForm] = useState({
     studentId: "",
     password: "",
   });
+
+  const handleLogin = () => {
+    if (!loginForm.studentId || !loginForm.password) {
+      alert("학번과 비밀번호를 입력해주세요.");
+      return;
+    }
+
+    navigate("/");
+  };
 
   return (
     <div className="w-full flex flex-col items-center gap-3 px-5">
@@ -31,11 +41,7 @@ const LoginContainer = () => {
           setLoginForm({ ...loginForm, password: e.target.value })
         }
       />
-      <Button
-        styleType={"login"}
-        text={"로그인"}
-        onClick={() => console.log("loginForm")}
-      />
+      <Button styleType={"login"} text={"로그인"} onClick={handleLogin} />
       <p className="text-sm text-[var(--sub)]">
         학번 또는 비밀번호가 기억나지 않는다면?
       </p>{" "}

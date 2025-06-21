@@ -8,11 +8,11 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className = "", styleType, text }, ref) => {
+  ({ className = "", styleType, text, onClick }, ref) => {
     const inputStyles = BUTTON_STYLE[styleType](className);
 
     return (
-      <button ref={ref} className={inputStyles}>
+      <button ref={ref} className={inputStyles} onClick={onClick}>
         {text}
       </button>
     );
