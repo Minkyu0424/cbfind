@@ -3,7 +3,7 @@ import "./App.css";
 function App() {
   return (
     <>
-      <h1>hi</h1>
+      <h1 className="font-yangjin">오다주움</h1>
     </>
   );
 }
