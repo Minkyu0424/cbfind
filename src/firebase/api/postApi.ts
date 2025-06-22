@@ -23,7 +23,7 @@ import { db, storage } from '../setFirebase';
 
 // 게시글 타입 정의
 export type PostData = {
-  id?: string; // Firestore 문서 ID (선택적)
+  id?: String; // Firestore 문서 ID (선택적)
   title: string;
   content: string;
   imageUrl?: string;
@@ -31,6 +31,7 @@ export type PostData = {
   authorId: string;
   status?: 'open' | 'closed';
   timestamp?: any;
+  place: string;
 };
 
 const postsRef = collection(db, 'posts');
