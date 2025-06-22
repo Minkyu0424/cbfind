@@ -1,10 +1,10 @@
 // AuthContext.tsx
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import type { ReactNode } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
-import type { User as FirebaseUser } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
-import { auth, db } from '../firebase/setFirebase';
+import type { User as FirebaseUser } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import type { ReactNode } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { auth, db } from "../firebase/setFirebase";
 
 type UserInfo = {
   name: string;
@@ -22,7 +22,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType>({
   user: null,
   userInfo: null,
-  loading: true
+  loading: true,
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -34,7 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-        const userRef = doc(db, 'users', currentUser.uid);
+        const userRef = doc(db, "users", currentUser.uid);
         const userSnap = await getDoc(userRef);
         if (userSnap.exists()) {
           setUserInfo(userSnap.data() as UserInfo);
@@ -58,4 +58,3 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   return useContext(AuthContext);
 }
-
