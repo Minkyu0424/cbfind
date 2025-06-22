@@ -14,7 +14,7 @@ const DetailContainer = ({ itemId }: DetailContainerProps) => {
 
   return (
     <div className="flex flex-col gap-3">
-      <img src={item.image} alt={item.title} className="w-full h-auto mb-4" />
+      <img src={item.image} alt={item.title} className="w-full h-auto mb-4 rounded-xl" />
       <DetailUserProfile user={item.user} />
       <DetailContents data={item} />
       <CommonContents />
