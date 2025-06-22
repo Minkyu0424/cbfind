@@ -5,7 +5,7 @@ interface UserProfileProps {
 }
 const DetailUserProfile = ({ user }: UserProfileProps) => {
   return (
-    <div className="w-full flex justify-between items-end">
+    <div className="w-full flex justify-between items-end border-b border-b-[var(--gray)] pb-2">
       <div className="flex gap-3">
         <img
           className="w-12 h-12 rounded-full border-2 border-[var(--main)]"
