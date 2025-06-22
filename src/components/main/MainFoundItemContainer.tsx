@@ -8,7 +8,7 @@ const MainFoundItemContainer = () => {
     <div className="size-full">
       <MainItemContainerHeader title="찾았어요" />
       <div className="flex px-2 gap-y-5 justify-between flex-wrap pt-5 pb-3">
-        {MockItems.slice(0, 9).map((item) => (
+        {MockItems.slice(0, 6).map((item) => (
           <Item key={item.title} item={item} />
         ))}
       </div>
