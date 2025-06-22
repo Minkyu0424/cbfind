@@ -13,7 +13,7 @@ const MainLostItemContainer = () => {
         ))}
       </div>
       <Link
-        to={"/"}
+        to={"/items/lost"}
         className="w-full justify-end flex items-center text-[10px] text-[var(--sub)]"
       >
         더 보기
