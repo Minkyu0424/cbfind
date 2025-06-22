@@ -1,16 +1,28 @@
-const Item = () => {
+import type { ItemTypes } from "../../types/common";
+
+interface ItemProps {
+  item: ItemTypes;
+}
+const Item = ({ item }: ItemProps) => {
+  const today = new Date().getTime();
+  const transDate = (date: string) => {
+    const uploadDate = new Date(date).getTime();
+    return Math.floor((today - uploadDate) / (1000 * 60 * 60 * 24));
+  };
   return (
-    <div className="flex flex-col w-full">
-      <div className="flex flex-col gap-2">
+    <div className="flex flex-col w-[30%] border-b border-b-[var(--gray)] pb-2 cursor-pointer">
+      <div className="flex flex-col gap-2 pl-1">
         <img
-          className="w-full h-full rounded-xl"
-          src="https://placehold.co/109x112"
+          className="w-full aspect-square object-cover rounded-xl"
+          src={item.image}
         />
-        <p>에어팟</p>
-        <p>한짝밖에 없어요 비에 젖어있었어요 그리</p>
-        <div>
-          <p>학생회관</p>
-          <p>2일전</p>
+        <p className="text-[15px] font-semibold">{item.title}</p>
+        <p className="text-xs">{item.content}</p>
+        <div className="flex w-full justify-between items-end">
+          <p className="py-0.5 px-1 text-[10px] bg-[var(--sub2)] rounded">{item.place}</p>
+          <p className="text-[10px] font-medium">
+            {transDate(item.date) < 1 ? "오늘" : `${transDate(item.date)}일전`}
+          </p>
         </div>
       </div>
     </div>
