@@ -15,3 +15,11 @@ export type UserTypes = {
   name: string;
   profileImage: string;
 };
+
+export interface UploadFormTypes { 
+  title: string;
+  content: string;
+  image: string;
+  place: string;
+  date: string;
+}

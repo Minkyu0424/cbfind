@@ -3,6 +3,7 @@ import Detail from "../pages/Detail";
 import Items from "../pages/Items";
 import Login from "../pages/Login";
 import Main from "../pages/Main";
+import Upload from "../pages/Upload";
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -11,6 +12,7 @@ const AppRouter = () => (
       <Route path="/login" element={<Login />} />
       <Route path="/items/*" element={<Items />} />
       <Route path="/detail/*" element={<Detail />} />
+      <Route path="/upload" element={<Upload />} />
     </Routes>
   </BrowserRouter>
 );
