@@ -1,2 +1,21 @@
 @import "tailwindcss";
 
+@theme {
+  --font-yangjin: "양진체", sans-serif;
+}
+
+@layer base {
+  :root {
+    --main: #b92454;
+    --main2: #d75a7a;
+    --main3: #f2d4da;
+    --sub: #6b7280;
+    --sub2: #e4e4e4;
+    --gray: #D4D4D8;
+    --black: #322d2d;
+    --white: #fbfbfb;
+  }
+}
+
+
+

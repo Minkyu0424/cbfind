@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "양진체";
+  src: url("https://fastly.jsdelivr.net/gh/supernovice-lab/font@0.9/yangjin.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  max-width: 375px;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--black);
+}
