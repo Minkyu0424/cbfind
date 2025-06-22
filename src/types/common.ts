@@ -10,7 +10,7 @@ export interface ItemTypes {
   chatCount: number;
 }
 
-type UserTypes = {
+export type UserTypes = {
   id: number;
   name: string;
   profileImage: string;

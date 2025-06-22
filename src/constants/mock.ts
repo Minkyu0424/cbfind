@@ -11,7 +11,7 @@ export const MockItems: ItemTypes[] = [
     user: {
       id: 101,
       name: "김민지",
-      profileImage: "/profiles/user1.png",
+      profileImage: "/profile1.jpg",
     },
     views: 124,
     chatCount: 3,
@@ -26,7 +26,7 @@ export const MockItems: ItemTypes[] = [
     user: {
       id: 102,
       name: "이준호",
-      profileImage: "/profiles/user2.png",
+      profileImage: "/profile1.jpg",
     },
     views: 98,
     chatCount: 2,
@@ -41,7 +41,7 @@ export const MockItems: ItemTypes[] = [
     user: {
       id: 103,
       name: "박서윤",
-      profileImage: "/profiles/user3.png",
+      profileImage: "/profile1.jpg",
     },
     views: 76,
     chatCount: 1,
@@ -56,7 +56,7 @@ export const MockItems: ItemTypes[] = [
     user: {
       id: 104,
       name: "최현우",
-      profileImage: "/profiles/user4.png",
+      profileImage: "/profile1.jpg",
     },
     views: 145,
     chatCount: 4,
@@ -71,7 +71,7 @@ export const MockItems: ItemTypes[] = [
     user: {
       id: 105,
       name: "정예은",
-      profileImage: "/profiles/user5.png",
+      profileImage: "/profile1.jpg",
     },
     views: 89,
     chatCount: 0,
@@ -86,7 +86,7 @@ export const MockItems: ItemTypes[] = [
     user: {
       id: 106,
       name: "한지훈",
-      profileImage: "/profiles/user6.png",
+      profileImage: "/profile1.jpg",
     },
     views: 200,
     chatCount: 5,
@@ -101,7 +101,7 @@ export const MockItems: ItemTypes[] = [
     user: {
       id: 107,
       name: "서하은",
-      profileImage: "/profiles/user7.png",
+      profileImage: "/profile1.jpg",
     },
     views: 73,
     chatCount: 2,
@@ -116,7 +116,7 @@ export const MockItems: ItemTypes[] = [
     user: {
       id: 108,
       name: "조민재",
-      profileImage: "/profiles/user8.png",
+      profileImage: "/profile1.jpg",
     },
     views: 65,
     chatCount: 1,
@@ -131,7 +131,7 @@ export const MockItems: ItemTypes[] = [
     user: {
       id: 109,
       name: "이수빈",
-      profileImage: "/profiles/user9.png",
+      profileImage: "/profile1.jpg",
     },
     views: 52,
     chatCount: 0,
@@ -146,7 +146,7 @@ export const MockItems: ItemTypes[] = [
     user: {
       id: 110,
       name: "홍길동",
-      profileImage: "/profiles/user10.png",
+      profileImage: "/profile1.jpg",
     },
     views: 190,
     chatCount: 6,
