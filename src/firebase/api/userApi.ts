@@ -1,42 +1,67 @@
 //user 회원가입, 회원탈퇴, 로그인, 로그아웃 등 관련 api
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, deleteUser } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  deleteUser
+} from 'firebase/auth';
 import { doc, setDoc, deleteDoc } from 'firebase/firestore';
 import { auth, db } from '../setFirebase';
 
-// 1. 회원가입 (학번, 비밀번호, 이름)
-export async function signUpUser({ studentId, password, name }) {
-  const email = `${studentId}@chungbuk.ac.kr`;
+// 사용자 정보 타입
+export type UserInfo = {
+  name: string;
+  studentId: string;
+  email: string;
+  isAdmin: boolean;
+};
 
+// 회원가입
+export async function signUpUser({
+  name,
+  studentId,
+  email,
+  password
+}: {
+  name: string;
+  studentId: string;
+  email: string;
+  password: string;
+}): Promise<void> {
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-  const user = userCredential.user;
+  const uid = userCredential.user.uid;
 
-  await setDoc(doc(db, 'users', user.uid), {
+  const userData: UserInfo = {
     name,
     studentId,
     email,
-    isAdmin: false
-  });
+    isAdmin: false // 기본값: 일반 사용자
+  };
 
-  return user;
+  await setDoc(doc(db, 'users', uid), userData);
 }
 
-// 2. 로그인
-export async function signInUser({ studentId, password }) {
-  const email = `${studentId}@chungbuk.ac.kr`;
-  const userCredential = await signInWithEmailAndPassword(auth, email, password);
-  return userCredential.user;
+// 로그인
+export async function signInUser({
+  email,
+  password
+}: {
+  email: string;
+  password: string;
+}): Promise<void> {
+  await signInWithEmailAndPassword(auth, email, password);
 }
 
-// 3. 로그아웃
-export async function signOutUser() {
+// 로그아웃
+export async function signOutUser(): Promise<void> {
   await signOut(auth);
 }
 
-// 4. 회원탈퇴 (Auth 계정 + Firestore 사용자 정보 삭제)
-export async function deleteUserAccount() {
-  const user = auth.currentUser;
-  if (!user) throw new Error('로그인된 사용자가 없습니다.');
+// 회원탈퇴
+export async function deleteUserAccount(): Promise<void> {
+  const currentUser = auth.currentUser;
+  if (!currentUser) throw new Error('로그인된 사용자가 없습니다');
 
-  await deleteDoc(doc(db, 'users', user.uid)); // Firestore에서 사용자 삭제
-  await deleteUser(user); // Firebase Auth 사용자 삭제
+  await deleteDoc(doc(db, 'users', currentUser.uid));
+  await deleteUser(currentUser);
 }
