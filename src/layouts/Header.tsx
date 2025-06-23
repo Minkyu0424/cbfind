@@ -1,10 +1,12 @@
+import { Link } from 'react-router-dom';
+
 const Header = () => {
   return (
     <div className="w-full px-3 py-4 flex justify-between items-center">
-      <div className="flex gap-3 items-center">
-        <img src="/cnuniv.svg" alt="Login SVG" className="w-6 h-7" />
-        <p className="font-yangjin">찾아줄게</p>
-      </div>
+      <Link to="/" className="flex gap-3 items-center">
+         <img src="/cnuniv.svg" alt="Login SVG" className="w-6 h-7" />
+         <p className="font-yangjin">찾아줄게</p>
+      </Link>
       <div className="flex items-end gap-1.5">
         <p className="text-sm font-medium">공주맛밤님</p>
         <img src="/ci_chat.svg" alt="chat SVG" className="w-6 h-6 cursor-pointer" />
