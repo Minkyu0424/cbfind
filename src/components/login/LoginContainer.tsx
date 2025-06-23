@@ -44,13 +44,22 @@ const LoginContainer = () => {
       <Button styleType={"login"} text={"로그인"} onClick={handleLogin} />
       <p className="text-sm text-[var(--sub)]">
         학번 또는 비밀번호가 기억나지 않는다면?
-      </p>{" "}
-      <Link
-        className="text-sm text-[var(--main)]"
-        to={"https://www.cbnu.ac.kr/loginView.do"}
-      >
-        충북대학교로 이동
-      </Link>
+      </p>
+      <div className="flex gap-1 items-center">
+        <Link
+          className="text-sm text-[var(--main)]"
+          to={"https://www.cbnu.ac.kr/loginView.do"}
+        >
+          충북대학교로 이동
+        </Link>
+        <p className="text-sm text-[var(--sub)] pb-0.5">/</p>
+        <Link
+          className="text-sm text-[var(--main)]"
+          to={"/signup"}
+        >
+          회원가입
+        </Link>
+      </div>
     </div>
   );
 };
