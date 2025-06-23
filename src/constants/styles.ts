@@ -1,6 +1,8 @@
 export const INPUT_STYLE = {
   login: (className: string) =>
     `w-full h-[50px] border border-[var(--gray)] rounded-lg px-4 focus:outline-none rounded-lg ${className}`,
+  upload: (className: string) =>
+    `w-full text-sm h-10 border border-[var(--gray)] rounded-lg px-4 focus:outline-none rounded-lg ${className}`,
 } as const;
 
 export const BUTTON_STYLE = {

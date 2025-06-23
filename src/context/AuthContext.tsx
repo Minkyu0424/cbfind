@@ -1,4 +1,5 @@
 // AuthContext.tsx
+
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -22,7 +23,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType>({
   user: null,
   userInfo: null,
-  loading: true
+  loading: true,
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -34,7 +35,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-        const userRef = doc(db, 'users', currentUser.uid);
+        const userRef = doc(db, "users", currentUser.uid);
         const userSnap = await getDoc(userRef);
         if (userSnap.exists()) {
           setUserInfo(userSnap.data() as UserInfo);
@@ -58,4 +59,3 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   return useContext(AuthContext);
 }
-

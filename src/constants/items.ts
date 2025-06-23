@@ -5,3 +5,11 @@ export const MockOptions: FilterOption[] = [
   { label: "조회순", value: "views" },
   { label: "오래된순", value: "oldest" },
 ];
+
+export const InitUploadFormData = {
+  title: "",
+  content: "",
+  image: "",
+  place: "",
+  date: new Date().toISOString(),
+};
