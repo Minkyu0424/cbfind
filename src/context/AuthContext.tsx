@@ -1,10 +1,11 @@
 // AuthContext.tsx
-import type { User as FirebaseUser } from "firebase/auth";
-import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import type { ReactNode } from "react";
-import { createContext, useContext, useEffect, useState } from "react";
-import { auth, db } from "../firebase/setFirebase";
+
+import { createContext, useContext, useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import type { User as FirebaseUser } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from '../firebase/setFirebase';
 
 type UserInfo = {
   name: string;
