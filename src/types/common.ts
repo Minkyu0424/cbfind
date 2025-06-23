@@ -16,10 +16,16 @@ export type UserTypes = {
   profileImage: string;
 };
 
-export interface UploadFormTypes { 
+export interface UploadFormTypes {
   title: string;
   content: string;
   image: string;
   place: string;
   date: string;
+}
+
+export interface SignUpFormTypes {
+  name: string;
+  studentId: string;
+  password: string;
 }

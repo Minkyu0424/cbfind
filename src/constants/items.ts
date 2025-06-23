@@ -13,3 +13,9 @@ export const InitUploadFormData = {
   place: "",
   date: new Date().toISOString(),
 };
+
+export const InitSignUpFormData = {
+  name: "",
+  studentId: "",
+  password: "",
+};

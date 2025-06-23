@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import Main from "../pages/Main";
 import Upload from "../pages/Upload";
 import Search from "../pages/Search";
+import SignUp from "../pages/SignUp";
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -15,6 +16,7 @@ const AppRouter = () => (
       <Route path="/detail/*" element={<Detail />} />
       <Route path="/upload" element={<Upload />} />
       <Route path="/search" element={<Search />} />
+      <Route path="/signup" element={<SignUp />} />
     </Routes>
   </BrowserRouter>
 );

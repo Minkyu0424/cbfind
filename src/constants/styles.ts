@@ -10,4 +10,6 @@ export const INPUT_STYLE = {
 export const BUTTON_STYLE = {
   login: (className: string) =>
     `w-full h-12 flex items-center justify-center bg-[var(--main2)] text-[var(--white)] rounded-lg shadow-lg cursor-pointer ${className}`,
+  signup: (className: string) =>
+    `w-full h-12 flex items-center justify-center bg-[var(--sub)] text-[var(--white)] rounded-lg shadow-lg cursor-pointer ${className}`,
 } as const;
