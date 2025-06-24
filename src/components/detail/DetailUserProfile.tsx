@@ -1,29 +1,18 @@
 import { Link } from "react-router-dom";
 import type { UserTypes } from "../../types/common";
-import { reportUser } from "../../firebase/api/userApi"; // 경로는 실제 구조에 맞게
 
 interface UserProfileProps {
   user: UserTypes;
-  authorId: string;
+  openModal: () => void;
 }
 
-const DetailUserProfile = ({ user, authorId }: UserProfileProps) => {
-  const handleReportClick = async () => {
-    try {
-      await reportUser(authorId);
-        
-      alert("신고가 접수되었습니다.");
-    } catch {
-      alert("신고 처리에 실패했습니다.");
-    }
-  };
-
+const DetailUserProfile = ({ user, openModal }: UserProfileProps) => {
   return (
     <div className="w-full flex justify-between items-end border-b border-b-[var(--gray)] pb-2">
       <div className="flex gap-3">
         <img
           className="w-12 h-12 rounded-full border-2 border-[var(--main)]"
-          src={user.profileImage || '/woowang.png'}
+          src={user.profileImage || "/woowang.png"}
           alt="profile"
         />
         <div className="flex flex-col gap-1">
@@ -36,12 +25,11 @@ const DetailUserProfile = ({ user, authorId }: UserProfileProps) => {
           </Link>
         </div>
       </div>
-
-      <img 
-        className="w-9 h-9 cursor-pointer"
+      <img
+        className="w-8 h-8 cursor-pointer"
         src="/siren.svg"
         alt="신고"
-        onClick={handleReportClick}
+        onClick={openModal}
       />
     </div>
   );
