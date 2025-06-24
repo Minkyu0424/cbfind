@@ -9,7 +9,7 @@ const DetailUserProfile = ({ user }: UserProfileProps) => {
       <div className="flex gap-3">
         <img
           className="w-12 h-12 rounded-full border-2 border-[var(--main)]"
-          src={user.profileImage}
+          src={user.profileImage || '/woowang.png'}
           alt="profile"
         />
         <div className="flex flex-col gap-1">

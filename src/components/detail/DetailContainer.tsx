@@ -4,8 +4,9 @@ import DetailContents from "./DetailContents";
 import DetailUserProfile from "./DetailUserProfile";
 
 import { useEffect, useState } from "react";
-import { getPostById } from "../../firebase/api/postApi";
 import type { PostData } from "../../firebase/api/postApi";
+import { getPostById } from "../../firebase/api/postApi";
+import CommentContainer from "./Comment/CommentContainer";
 
 interface DetailContainerProps {
   itemId: string;
@@ -18,9 +19,8 @@ const DetailContainer = ({ itemId }: DetailContainerProps) => {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        
         const post = await getPostById(itemId);
-        
+
         setItem(post);
       } catch (error) {
         console.error("게시글 로드 실패:", error);
@@ -38,24 +38,29 @@ const DetailContainer = ({ itemId }: DetailContainerProps) => {
 
   return (
     <div className="flex flex-col gap-3">
-      <img 
-        src={item.imageUrl?.startsWith("http") ? item.imageUrl.replace("http://", "https://") : "/default.png"}
+      <img
+        src={
+          item.imageUrl?.startsWith("http")
+            ? item.imageUrl.replace("http://", "https://")
+            : "/default.png"
+        }
         alt={item.title}
-       className="w-full h-auto mb-4 rounded-xl" />
+        className="w-full h-auto mb-4 rounded-xl"
+      />
       <DetailUserProfile user={item.user} />
       <DetailContents
-  data={{ 
-    id: item.id,
-    title: item.title,
-    content: item.content,
-    image: item.imageUrl || "null", // ✅ 이름 변환
-    place: item.place,
-    date: item.date ?? "",                  // ✅ 기본값
-    user: item.user || { name: "익명" },     // ✅ 더미 데이터 대응
-    views: item.views || 0,
-    chatCount: item.chatCount || 0,
-    type: item.type
-    }}
+        data={{
+          id: item.id,
+          title: item.title,
+          content: item.content,
+          image: item.imageUrl || "null", // ✅ 이름 변환
+          place: item.place,
+          date: item.date ?? "", // ✅ 기본값
+          user: item.user || { name: "익명" }, // ✅ 더미 데이터 대응
+          views: item.views || 0,
+          chatCount: item.chatCount || 0,
+          type: item.type,
+        }}
       />
       <CommentContainer />
       <CommonContents />
