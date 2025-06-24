@@ -1,15 +1,12 @@
 //user 회원가입, 회원탈퇴, 로그인, 로그아웃 등 관련 api
 import {
   createUserWithEmailAndPassword,
-  deleteUser,
   signInWithEmailAndPassword,
   signOut,
   deleteUser
 } from 'firebase/auth';
-import { doc, setDoc, deleteDoc, updateDoc, increment } from 'firebase/firestore';
+import { doc, setDoc, deleteDoc, updateDoc, increment, getDoc } from 'firebase/firestore';
 import { auth, db } from '../setFirebase';
-
-import type { SignUpFormTypes } from "../../types/common";
 
 // 사용자 정보 타입
 export type UserInfo = {
@@ -25,13 +22,17 @@ export type UserInfo = {
 export async function signUpUser({
   name,
   studentId,
-  email,
+  email,  
   password,
   agreedToPolicy,
-
   reportCount
 }: {
-  SignUpFormTypes
+  name: string;
+  studentId: string;
+  email: string;
+  password: string;
+  agreedToPolicy: boolean;
+  reportCount: number;
 }): Promise<void> {
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   const uid = userCredential.user.uid;
@@ -41,16 +42,17 @@ export async function signUpUser({
     studentId,
     email,
     isAdmin: false, // 기본값: 일반 사용자
+    agreedToPolicy: false,
     reportCount: 0
   };
 
-  await setDoc(doc(db, "users", uid), userData);
+  await setDoc(doc(db, 'users', uid), userData);
 }
 
 // 로그인
 export async function signInUser({
   email,
-  password,
+  password
 }: {
   email: string;
   password: string;
@@ -66,16 +68,15 @@ export async function signOutUser(): Promise<void> {
 // 회원탈퇴
 export async function deleteUserAccount(): Promise<void> {
   const currentUser = auth.currentUser;
-  if (!currentUser) throw new Error("로그인된 사용자가 없습니다");
+  if (!currentUser) throw new Error('로그인된 사용자가 없습니다');
 
-  await deleteDoc(doc(db, "users", currentUser.uid));
+  await deleteDoc(doc(db, 'users', currentUser.uid));
   await deleteUser(currentUser);
 }
 
 // 유저신고
 export const reportUser = async (userId: string) => {
   try {
-    console.log(userId);
     const userRef = doc(db, "users", userId); // "users"는 유저 컬렉션 이름
     await updateDoc(userRef, {
       reportCount: increment(1),
@@ -84,4 +85,13 @@ export const reportUser = async (userId: string) => {
     console.error("신고 실패:", error);
     throw error;
   }
+};
+
+export const getUserNameById = async (userId: string): Promise<string> => {
+  const ref = doc(db, "users", userId);
+  const snap = await getDoc(ref);
+  if (snap.exists()) {
+    return snap.data().name || "알 수 없음";
+  }
+  return "알 수 없음";
 };

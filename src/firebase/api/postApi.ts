@@ -112,6 +112,10 @@ export async function getPostById(postId: string): Promise<PostData> {
   if (!snapshot.exists()) throw new Error('게시글이 존재하지 않습니다');
 
   const data = snapshot.data() as any;
+
+  const currentViews = data.views ?? 0;
+  await updateDoc(postDoc, { views: currentViews + 1 });
+  
   return {
     id: snapshot.id,
     ...data,

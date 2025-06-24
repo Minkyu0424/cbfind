@@ -4,6 +4,7 @@ import { auth, db } from "../firebase/setFirebase";
 import { doc, getDoc } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 
+
 const Header = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [userName, setUserName] = useState<string>("");
@@ -41,6 +42,10 @@ const Header = () => {
     }
   };
 
+  const handleClick = () => {
+    navigate("/chats"); 
+  };
+
   return (
     <div className="w-full px-3 py-4 flex justify-between items-center">
       <Link to="/" className="flex gap-3 items-center">
@@ -69,9 +74,10 @@ const Header = () => {
           src="/ci_chat.svg"
           alt="chat SVG"
           className="w-6 h-6 cursor-pointer"
+          onClick={handleClick}
         />
         <div className="relative flex pr-1 cursor-pointer">
-          <img src="/Frame.svg" alt="alarm SVG" className="w-6 h-5.5" />
+          <img src="/Frame.svg" alt="alarm SVG" className="w-6 h-5.5"/>
           <div className="flex items-center justify-center text-[10px] w-4 h-4 absolute right-0.5 top-[-2px] bg-red-600 rounded-full text-white">
             13
           </div>

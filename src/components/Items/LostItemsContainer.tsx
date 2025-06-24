@@ -8,6 +8,7 @@ import ItemsFilterDropdown from "./ItemsFilterDropdown";
 
 import { fetchPosts } from "../../firebase/api/postApi";
 import type { PostData } from "../../firebase/api/postApi";
+import defaultImage from "../../defaultImage/defaultImage_lost.png"
 
 const LostItemsContainer = () => {
   const [lostPosts, setLostPosts] = useState<PostData[]>([]);
@@ -39,7 +40,7 @@ const LostItemsContainer = () => {
              id: (post.id ?? '0').toString(), 
               title: post.title,
              content: post.content,
-              image: post.imageUrl || "/default.png",
+              image: post.imageUrl || defaultImage,
              place: post.place.length > 5 ? post.place.slice(0, 5) + '...' : post.place, // content 일부를 위치로 임시 사용
              date: post.timestamp?.toDate().toISOString() || "",
              type: post.type,
@@ -53,7 +54,7 @@ const LostItemsContainer = () => {
             }}
          />
         ))}
-          
+        
         </div>
         <Pagination currentPage={page} totalPages={5} onPageChange={setPage} />
       </div>

@@ -6,6 +6,8 @@ import Main from "../pages/Main";
 import Upload from "../pages/Upload";
 import Search from "../pages/Search";
 import SignUp from "../pages/SignUp";
+import ChatRoom from '../pages/ChatRoom';
+import ChatList from "../pages/ChatList";
 
 const AppRouter = () => (
   <BrowserRouter>
@@ -17,6 +19,8 @@ const AppRouter = () => (
       <Route path="/upload" element={<Upload />} />
       <Route path="/search" element={<Search />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/chat/:id" element={<ChatRoom />} />
+      <Route path="/chats" element={<ChatList />} />
     </Routes>
   </BrowserRouter>
 );
