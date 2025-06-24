@@ -29,3 +29,9 @@ export interface SignUpFormTypes {
   studentId: string;
   password: string;
 }
+
+export interface CommentTypes {
+  commentId: number;
+  content: string;
+  createdAt: string;
+}

@@ -1,3 +1,4 @@
+import type { CommentProps } from "../components/detail/Comment/Comment";
 import type { ItemTypes } from "../types/common";
 
 export const MockItems: ItemTypes[] = [
@@ -160,5 +161,80 @@ export const MockItems: ItemTypes[] = [
     },
     views: 190,
     chatCount: 6,
+  },
+];
+
+export const MockComments: CommentProps[] = [
+  {
+    user: {
+      id: 1,
+      name: "김민수",
+      profileImage: "/profile1.jpg",
+    },
+    comment: {
+      commentId: 101,
+      content: "좋은 정보 감사합니다!",
+      createdAt: "2025-06-24T10:30:00",
+    },
+  },
+  {
+    user: {
+      id: 2,
+      name: "이서연",
+      profileImage: "/profile2.jpg",
+    },
+    comment: {
+      commentId: 102,
+      content: "이거 어디서 찾으셨나요?",
+      createdAt: "2025-06-24T10:35:00",
+    },
+  },
+  {
+    user: {
+      id: 3,
+      name: "박준형",
+      profileImage: "/profile3.jpg",
+    },
+    comment: {
+      commentId: 103,
+      content: "혹시 습득하신 장소가 어딘가요?",
+      createdAt: "2025-06-24T11:00:00",
+    },
+  },
+  {
+    user: {
+      id: 4,
+      name: "정하늘",
+      profileImage: "/profile4.jpg",
+    },
+    comment: {
+      commentId: 104,
+      content: "감사합니다! 꼭 찾길 바랄게요.",
+      createdAt: "2025-06-24T11:20:00",
+    },
+  },
+  {
+    user: {
+      id: 5,
+      name: "한지우",
+      profileImage: "/profile5.jpg",
+    },
+    comment: {
+      commentId: 105,
+      content: "신고했어요. 조심하세요!",
+      createdAt: "2025-06-24T11:40:00",
+    },
+  },
+  {
+    user: {
+      id: 6,
+      name: "최지훈",
+      profileImage: "/profile6.jpg",
+    },
+    comment: {
+      commentId: 106,
+      content: "도움이 되셨다면 다행입니다 :)",
+      createdAt: "2025-06-24T12:00:00",
+    },
   },
 ];

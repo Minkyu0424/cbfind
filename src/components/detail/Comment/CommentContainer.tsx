@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { MockComments } from "../../../constants/mock";
+import Comment from "./Comment";
 
 const CommentContainer = () => {
   const [comment, setComment] = useState("");
@@ -26,6 +28,11 @@ const CommentContainer = () => {
           className="w-5 h-5 absolute right-5 bottom-4 cursor-pointer"
           onClick={submitComment}
         />
+      </div>
+      <div className="flex flex-col w-full gap-3 px-2 pt-3">
+        {MockComments.map((comment) => (
+          <Comment user={comment.user} comment={comment.comment} />
+        ))}
       </div>
     </div>
   );
