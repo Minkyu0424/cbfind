@@ -44,7 +44,7 @@ const DetailContainer = ({ itemId }: DetailContainerProps) => {
         src={item.imageUrl?.startsWith("http") ? item.imageUrl.replace("http://", "https://") : "/default.png"}
         alt={item.title}
        className="w-full h-auto mb-4 rounded-xl" />
-      {/* <DetailUserProfile user={item.user} /> */}
+      <DetailUserProfile user={item.user} />
       <DetailContents
   data={{ 
     id: item.id,
@@ -58,7 +58,8 @@ const DetailContainer = ({ itemId }: DetailContainerProps) => {
     chatCount: item.chatCount || 0,
     type: item.type
     }}
-/>
+      />
+      <CommentContainer />
       <CommonContents />
     </div>
   );
