@@ -9,7 +9,7 @@ const MainItemContainerHeader = ({ title }: MainItemContainerHeaderProps) => {
     <div className="flex items-end w-full px-3 py-2.5 justify-between border-b border-b-[var(--gray)]">
       <p className="text-2xl font-semibold">{title}</p>
       <div className="flex gap-1 items-center">
-        <Link to={"search"}>
+        <Link to={"/search"}>
           <img src="/search.svg" alt="search SVG" className="w-4 h-4" />
         </Link>
         <Link

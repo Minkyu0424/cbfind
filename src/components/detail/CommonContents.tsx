@@ -3,7 +3,7 @@ import Item from "../common/Item";
 
 const CommonContents = () => {
   return (
-    <div className="mt-9">
+    <div className="mt-3">
       <div className="flex items-end w-full py-2.5 justify-between border-b border-b-[var(--gray)]">
         <p className="text-2xl font-semibold">유사한 게시물</p>
       </div>

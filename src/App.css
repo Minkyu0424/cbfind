@@ -2,6 +2,7 @@
 
 @theme {
   --font-yangjin: "양진체", sans-serif;
+  --font-pretendard: "Pretendard", sans-serif;
 }
 
 @layer base {
@@ -11,11 +12,8 @@
     --main3: #f2d4da;
     --sub: #6b7280;
     --sub2: #e4e4e4;
-    --gray: #D4D4D8;
+    --gray: #d4d4d8;
     --black: #322d2d;
     --white: #fbfbfb;
   }
 }
-
-
-

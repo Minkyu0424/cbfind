@@ -2,7 +2,7 @@ import { type InputHTMLAttributes, forwardRef } from "react";
 import { INPUT_STYLE } from "../../constants/styles";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  styleType: "login" | "upload";
+  styleType: "login" | "upload" | "search";
   className?: string;
 }
 

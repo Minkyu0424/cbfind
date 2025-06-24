@@ -1,4 +1,6 @@
 //import { MockItems } from "../../constants/mock";
+import CommentContainer from "./Comment/CommentContainer";
+
 import CommonContents from "./CommonContents";
 import DetailContents from "./DetailContents";
 import DetailUserProfile from "./DetailUserProfile";

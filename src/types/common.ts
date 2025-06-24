@@ -17,10 +17,22 @@ export type UserTypes = {
   profileImage: string;
 };
 
-export interface UploadFormTypes { 
+export interface UploadFormTypes {
   title: string;
   content: string;
   image: string | File;
   place: string;
   date: string;
+}
+
+export interface SignUpFormTypes {
+  name: string;
+  studentId: string;
+  password: string;
+}
+
+export interface CommentTypes {
+  commentId: number;
+  content: string;
+  createdAt: string;
 }

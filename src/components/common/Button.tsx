@@ -2,7 +2,7 @@ import { forwardRef, type ButtonHTMLAttributes } from "react";
 import { BUTTON_STYLE } from "../../constants/styles";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  styleType: "login";
+  styleType: "login" | "signup";
   text: string;
   className?: string;
 }
