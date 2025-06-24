@@ -5,6 +5,9 @@ import type { UploadFormTypes } from "../../types/common";
 import Input from "../common/Input";
 import Modal from "../common/Modal";
 
+import { uploadImageToStorage } from "../../utils/uploadImage";
+import { uploadPostToFirestore } from "../../utils/uploadPost";
+
 interface UploadFormProps {
   isFound: boolean;
 }
@@ -17,9 +20,26 @@ const UploadForm = ({ isFound }: UploadFormProps) => {
   const navigate = useNavigate();
   const formTitle = isFound ? "습득" : "분실";
 
-  const handleUpload = () => {
-    console.log("Upload Form Data:", uploadForm);
-    setShowModal(true);
+  const handleUpload = async () => {
+    try {
+      let imageUrl = "";
+
+      // 이미지가 File이면 Storage에 업로드
+      if (uploadForm.image instanceof File) {
+        imageUrl = await uploadImageToStorage(uploadForm.image);
+      }
+
+      const uploadData = {
+        ...uploadForm,
+        image: imageUrl,
+      };
+
+      await uploadPostToFirestore(uploadData, isFound);
+      setShowModal(true);
+    } catch (error) {
+      alert("업로드에 실패했습니다.");
+      console.error(error);
+    }
   };
 
   const handleCloseModal = () => {
@@ -125,12 +145,10 @@ const UploadForm = ({ isFound }: UploadFormProps) => {
             type="file"
             accept="image/*"
             onChange={(e) =>
-              setUploadForm((prev) => ({
-                ...prev,
-                image: e.target.files?.[0]
-                  ? URL.createObjectURL(e.target.files[0])
-                  : "",
-              }))
+    setUploadForm((prev) => ({
+      ...prev,
+      image: e.target.files?.[0] ?? "",
+    }))
             }
             className="hidden"
           />

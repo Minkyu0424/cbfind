@@ -23,7 +23,7 @@ import { db, storage } from '../setFirebase';
 
 // 게시글 타입 정의
 export type PostData = {
-  id?: String; // Firestore 문서 ID (선택적)
+  id?: string; // Firestore 문서 ID (선택적)
   title: string;
   content: string;
   imageUrl?: string;
@@ -32,6 +32,10 @@ export type PostData = {
   status?: 'open' | 'closed';
   timestamp?: any;
   place: string;
+  date?: string;     
+  user?: any;       
+  views?: number;   
+  chatCount?: number; 
 };
 
 const postsRef = collection(db, 'posts');
@@ -83,10 +87,14 @@ export async function fetchPosts(type: 'lost' | 'found'): Promise<PostData[]> {
   );
 
   const snapshot = await getDocs(q);
-  return snapshot.docs.map(docSnap => ({
-    id: docSnap.id,
-    ...(docSnap.data() as Omit<PostData, 'id'>)
-  }));
+  return snapshot.docs.map(docSnap => {
+    const data = docSnap.data() as any;
+    return {
+      id: docSnap.id,
+      ...data,
+      imageUrl: data.imageUrl || data.image || "", // ✅ 호환 처리
+    };
+  });
 }
 
 // ✅ 게시글 상세 조회
@@ -95,9 +103,12 @@ export async function getPostById(postId: string): Promise<PostData> {
   const snapshot = await getDoc(postDoc);
   if (!snapshot.exists()) throw new Error('게시글이 존재하지 않습니다');
 
+  const data = snapshot.data() as any;
+
   return {
     id: snapshot.id,
-    ...(snapshot.data() as Omit<PostData, 'id'>)
+    ...data,
+    imageUrl: data.imageUrl || data.image || "", // 🔸 image 백업
   };
 }
 
@@ -110,10 +121,16 @@ export async function fetchPostsByUser(authorId: string): Promise<PostData[]> {
   );
 
   const snapshot = await getDocs(q);
-  return snapshot.docs.map(docSnap => ({
-    id: docSnap.id,
-    ...(docSnap.data() as Omit<PostData, 'id'>)
-  }));
+
+  return snapshot.docs.map(docSnap => {
+    const data = docSnap.data() as any;
+
+    return {
+      id: docSnap.id,
+      ...data,
+      imageUrl: data.imageUrl || data.image || "", // 🔸 image → imageUrl 백업 처리
+    };
+  });
 }
 
 // ✅ 이미지 삭제

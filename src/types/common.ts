@@ -1,5 +1,5 @@
 export interface ItemTypes {
-  id: number;
+  id?: string;
   title: string;
   content: string;
   image: string;
@@ -8,6 +8,7 @@ export interface ItemTypes {
   user: UserTypes;
   views: number;
   chatCount: number;
+  type: string;
 }
 
 export type UserTypes = {
@@ -19,7 +20,7 @@ export type UserTypes = {
 export interface UploadFormTypes {
   title: string;
   content: string;
-  image: string;
+  image: string | File;
   place: string;
   date: string;
 }
