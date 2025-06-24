@@ -18,4 +18,6 @@ export const InitSignUpFormData = {
   name: "",
   studentId: "",
   password: "",
+  email: "",
+  agreedToPolicy: false,
 };

@@ -1,12 +1,13 @@
 //user 회원가입, 회원탈퇴, 로그인, 로그아웃 등 관련 api
 import {
   createUserWithEmailAndPassword,
+  deleteUser,
   signInWithEmailAndPassword,
   signOut,
-  deleteUser
-} from 'firebase/auth';
-import { doc, setDoc, deleteDoc } from 'firebase/firestore';
-import { auth, db } from '../setFirebase';
+} from "firebase/auth";
+import { deleteDoc, doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../setFirebase";
+import type { SignUpFormTypes } from "../../types/common";
 
 // 사용자 정보 타입
 export type UserInfo = {
@@ -14,7 +15,7 @@ export type UserInfo = {
   studentId: string;
   email: string;
   isAdmin: boolean;
-  agreedToPolicy: boolean
+  agreedToPolicy: boolean;
 };
 
 // 회원가입
@@ -23,15 +24,13 @@ export async function signUpUser({
   studentId,
   email,
   password,
-  agreedToPolicy
-}: {
-  name: string;
-  studentId: string;
-  email: string;
-  password: string;
-  agreedToPolicy: boolean;
-}): Promise<void> {
-  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  agreedToPolicy,
+}: SignUpFormTypes): Promise<void> {
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
   const uid = userCredential.user.uid;
 
   const userData: UserInfo = {
@@ -39,16 +38,16 @@ export async function signUpUser({
     studentId,
     email,
     isAdmin: false, // 기본값: 일반 사용자
-    agreedToPolicy: false
+    agreedToPolicy: false,
   };
 
-  await setDoc(doc(db, 'users', uid), userData);
+  await setDoc(doc(db, "users", uid), userData);
 }
 
 // 로그인
 export async function signInUser({
   email,
-  password
+  password,
 }: {
   email: string;
   password: string;
@@ -64,8 +63,8 @@ export async function signOutUser(): Promise<void> {
 // 회원탈퇴
 export async function deleteUserAccount(): Promise<void> {
   const currentUser = auth.currentUser;
-  if (!currentUser) throw new Error('로그인된 사용자가 없습니다');
+  if (!currentUser) throw new Error("로그인된 사용자가 없습니다");
 
-  await deleteDoc(doc(db, 'users', currentUser.uid));
+  await deleteDoc(doc(db, "users", currentUser.uid));
   await deleteUser(currentUser);
 }
