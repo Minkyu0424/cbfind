@@ -29,6 +29,8 @@ export interface SignUpFormTypes {
   name: string;
   studentId: string;
   password: string;
+  email: string;
+  agreedToPolicy: boolean
 }
 
 export interface CommentTypes {

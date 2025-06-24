@@ -14,7 +14,7 @@ const LostItemsContainer = () => {
   useEffect(() => {
     const fetchLost = async () => {
       try {
-        const posts = await fetchPosts("lost");
+        const posts = await fetchPosts("found");
         setLostPosts(posts);
       } catch (error) {
         console.error("게시글 불러오기 실패:", error);
@@ -42,6 +42,7 @@ const LostItemsContainer = () => {
               image: post.imageUrl || "/default.png",
              place: post.place.length > 5 ? post.place.slice(0, 5) + '...' : post.place, // content 일부를 위치로 임시 사용
              date: post.timestamp?.toDate().toISOString() || "",
+             type: post.type,
              user: {
                 id: 0, // 아직 실제 유저 객체 없으니 임시값
                 name: post.authorId,

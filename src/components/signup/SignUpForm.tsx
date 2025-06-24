@@ -21,6 +21,17 @@ const SignUpForm = ({ signUpForm, setSignUpForm }: SignUpFormProps) => {
         />
       </div>
       <div className="flex flex-col gap-1">
+        <p className="text-xs text-zinc-400 pl-2">E-mail</p>
+        <Input
+          styleType={"search"}
+          value={signUpForm.email}
+          onChange={(e) =>
+            setSignUpForm({ ...signUpForm, email: e.target.value })
+          }
+          placeholder="E-mail을 입력"
+        />
+      </div>
+      <div className="flex flex-col gap-1">
         <p className="text-xs text-zinc-400 pl-2">학번</p>
         <Input
           styleType={"search"}

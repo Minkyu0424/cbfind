@@ -1,26 +1,39 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { SignUpFormTypes } from "../../types/common";
 import Button from "../common/Button";
+
+import { signUpUser } from "../../firebase/api/userApi";
 
 interface SignUpSubmitProps {
   signUpForm: SignUpFormTypes;
 }
 
 const SignUpSubmit = ({ signUpForm }: SignUpSubmitProps) => {
-  const handleSignUp = () => {
-    if (!signUpForm.name || !signUpForm.studentId || !signUpForm.password) {
+  const navigate = useNavigate();
+
+  const handleSignUp = async () => {
+    const { name, studentId, email, password, agreedToPolicy } = signUpForm;
+
+    if (!name || !studentId || !email || !password) {
       alert("모든 필드를 입력해주세요.");
       return;
     }
-    // 여기에 회원가입 로직을 추가해 학준아
-    alert("회원가입이 완료되었습니다!");
+
+    try {
+      await signUpUser({ name, studentId, email, password, agreedToPolicy});
+      alert("회원가입이 완료되었습니다!");
+      navigate("/login"); // 조건 만족 시에만 이동
+    } catch (error: any) {
+      alert("회원가입 실패: " + error.message);
+    }
   };
+
   return (
     <div className="w-full flex flex-col gap-4 px-4">
       <div className="flex flex-col w-full items-center gap-2">
-        <Link to={"/login"} className="w-full">
-          <Button styleType={"login"} text={"회원가입"} />
-        </Link>
+        <button className="w-full" onClick={handleSignUp}>
+          <Button styleType="login" text="회원가입" />
+        </button>
         <p className="text-xs text-zinc-400">나의 학번이기억나지 않는다면?</p>
         <Link
           className="text-xs text-[var(--main)]"
@@ -29,7 +42,6 @@ const SignUpSubmit = ({ signUpForm }: SignUpSubmitProps) => {
           충북대학교로 이동
         </Link>
       </div>
-      <Button styleType={"signup"} text={"로그인"} onClick={handleSignUp} />
     </div>
   );
 };

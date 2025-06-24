@@ -1,6 +1,4 @@
 //import { MockItems } from "../../constants/mock";
-import CommentContainer from "./Comment/CommentContainer";
-
 import CommonContents from "./CommonContents";
 import DetailContents from "./DetailContents";
 import DetailUserProfile from "./DetailUserProfile";
@@ -50,7 +48,7 @@ const DetailContainer = ({ itemId }: DetailContainerProps) => {
     id: item.id,
     title: item.title,
     content: item.content,
-    image: item.imageUrl || "/default.png", // ✅ 이름 변환
+    image: item.imageUrl || "null", // ✅ 이름 변환
     place: item.place,
     date: item.date ?? "",                  // ✅ 기본값
     user: item.user || { name: "익명" },     // ✅ 더미 데이터 대응

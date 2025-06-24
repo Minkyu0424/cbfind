@@ -14,6 +14,7 @@ export type UserInfo = {
   studentId: string;
   email: string;
   isAdmin: boolean;
+  agreedToPolicy: boolean
 };
 
 // 회원가입
@@ -21,12 +22,14 @@ export async function signUpUser({
   name,
   studentId,
   email,
-  password
+  password,
+  agreedToPolicy
 }: {
   name: string;
   studentId: string;
   email: string;
   password: string;
+  agreedToPolicy: boolean;
 }): Promise<void> {
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   const uid = userCredential.user.uid;
@@ -35,7 +38,8 @@ export async function signUpUser({
     name,
     studentId,
     email,
-    isAdmin: false // 기본값: 일반 사용자
+    isAdmin: false, // 기본값: 일반 사용자
+    agreedToPolicy: false
   };
 
   await setDoc(doc(db, 'users', uid), userData);
