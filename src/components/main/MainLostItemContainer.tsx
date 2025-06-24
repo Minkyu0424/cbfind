@@ -32,12 +32,13 @@ const MainLostItemContainer = () => {
           <Item
            key={String(post.id)}
             item={{
-             id: parseInt((post.id ?? '0').toString()), // string → number 변환
+             id: (post.id ?? '0').toString(), 
               title: post.title,
              content: post.content,
               image: post.imageUrl || "/default.png",
              place: post.place.length > 5 ? post.place.slice(0, 5) + '...' : post.place, // content 일부를 위치로 임시 사용
              date: post.timestamp?.toDate().toISOString() || "",
+             type: post.type,
              user: {
                 id: 0, // 아직 실제 유저 객체 없으니 임시값
                 name: post.authorId,
@@ -48,12 +49,10 @@ const MainLostItemContainer = () => {
             }}
          />
         ))}
-        {MockItems.slice(0, 6).map((item) => (
-          <Item key={item.title} item={item} />
-        ))}
+        
       </div>
       <Link
-        to={"/items/lost"}
+        to={"/items/found"}
         className="w-full justify-end flex items-center text-[10px] text-[var(--sub)]"
       >
         더 보기

@@ -1,5 +1,7 @@
 {
   "projects": {
     "default": "foundyourlost-d53fa"
-  }
+  },
+  "targets": {},
+  "etags": {}
 }
