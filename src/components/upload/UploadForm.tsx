@@ -49,6 +49,8 @@ const UploadForm = ({ isFound }: UploadFormProps) => {
     const uploadData = {
       ...uploadForm,
       image: imageUrl,
+      authorId: currentUser.uid,
+      reportCount: 0,
       user: {
         name: userData.name,
         studentId: userData.studentId,

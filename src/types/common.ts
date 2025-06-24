@@ -31,6 +31,7 @@ export interface SignUpFormTypes {
   password: string;
   email: string;
   agreedToPolicy: boolean
+  reportCount: number
 }
 
 export interface CommentTypes {

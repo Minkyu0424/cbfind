@@ -5,6 +5,7 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  increment,
   getDocs,
   query,
   where,
@@ -19,7 +20,7 @@ import {
   deleteObject 
 } from 'firebase/storage';
 
-import { db, storage } from '../setFirebase';
+import { db, storage, auth } from '../setFirebase';
 
 // 게시글 타입 정의
 export type PostData = {
@@ -35,7 +36,8 @@ export type PostData = {
   date?: string;     
   user?: any;       
   views?: number;   
-  chatCount?: number; 
+  chatCount?: number;
+  reportCount?: number;
 };
 
 const postsRef = collection(db, 'posts');
@@ -49,12 +51,18 @@ export async function uploadImage(file: File): Promise<string> {
 
 // ✅ 게시글 작성
 export async function createPost(post: Omit<PostData, 'id'>): Promise<string> {
+  const user = auth.currentUser;
+  if (!user) throw new Error("로그인한 사용자만 게시글을 작성할 수 있습니다.");
+
   const newPost = {
     ...post,
     imageUrl: post.imageUrl || '',
     status: 'open',
     timestamp: serverTimestamp(),
+    authorId: user.uid,
+    reportCount: 0
   };
+
   const docRef = await addDoc(postsRef, newPost);
   return docRef.id;
 }
@@ -104,7 +112,6 @@ export async function getPostById(postId: string): Promise<PostData> {
   if (!snapshot.exists()) throw new Error('게시글이 존재하지 않습니다');
 
   const data = snapshot.data() as any;
-
   return {
     id: snapshot.id,
     ...data,
@@ -148,3 +155,11 @@ export async function deleteImageByUrl(imageUrl: string): Promise<void> {
     console.warn('이미지 삭제 중 오류 발생:', error);
   }
 }
+
+//신고 누적
+export const reportPost = async (postId: string) => {
+  const postRef = doc(db, "posts", postId);
+  await updateDoc(postRef, {
+    reportCount: increment(1),
+  });
+};

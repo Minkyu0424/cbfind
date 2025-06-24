@@ -13,6 +13,7 @@ const SignUpSubmit = ({ signUpForm }: SignUpSubmitProps) => {
 
   const handleSignUp = async () => {
     const { name, studentId, email, password, agreedToPolicy } = signUpForm;
+    const reportCount = 0;
 
     if (!name || !studentId || !email || !password) {
       alert("모든 필드를 입력해주세요.");
@@ -20,7 +21,7 @@ const SignUpSubmit = ({ signUpForm }: SignUpSubmitProps) => {
     }
 
     try {
-      await signUpUser({ name, studentId, email, password, agreedToPolicy});
+      await signUpUser({ name, studentId, email, password, agreedToPolicy, reportCount});
       alert("회원가입이 완료되었습니다!");
       navigate("/login"); // 조건 만족 시에만 이동
     } catch (error: any) {

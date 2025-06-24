@@ -62,12 +62,6 @@ const Header = () => {
             >
               로그아웃
             </button>
-            <Link
-              className="px-2.5 pt-1.5 pb-2 text-center hover:bg-zinc-200"
-              to={""}
-            >
-              내정보
-            </Link>
           </div>
         )}
 
