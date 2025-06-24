@@ -6,7 +6,9 @@ import MainItemContainerHeader from "../main/MainItemContainerHeader";
 import ItemsFilterDropdown from "./ItemsFilterDropdown";
 
 import type { PostData } from "../../firebase/api/postApi";
+import defaultImage from "../../defaultImage/defaultImage_lost.png"
 import { fetchPosts } from "../../firebase/api/postApi";
+
 
 const LostItemsContainer = () => {
   const [lostPosts, setLostPosts] = useState<PostData[]>([]);
@@ -37,15 +39,12 @@ const LostItemsContainer = () => {
             item={{
               id: (post.id ?? "0").toString(),
               title: post.title,
-              content: post.content,
-              image: post.imageUrl || "/default.png",
-              place:
-                post.place.length > 5
-                  ? post.place.slice(0, 5) + "..."
-                  : post.place, // content 일부를 위치로 임시 사용
-              date: post.timestamp?.toDate().toISOString() || "",
-              type: post.type,
-              user: {
+             content: post.content,
+              image: post.imageUrl || defaultImage,
+             place: post.place.length > 5 ? post.place.slice(0, 5) + '...' : post.place, // content 일부를 위치로 임시 사용
+             date: post.timestamp?.toDate().toISOString() || "",
+             type: post.type,
+             user: {
                 id: 0, // 아직 실제 유저 객체 없으니 임시값
                 name: post.authorId,
                 profileImage: "/default-profile.png",
@@ -55,6 +54,7 @@ const LostItemsContainer = () => {
             }}
           />
         ))}
+
       </div>
       <Pagination currentPage={page} totalPages={5} onPageChange={setPage} />
     </div>

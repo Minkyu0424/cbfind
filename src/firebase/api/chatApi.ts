@@ -8,6 +8,7 @@ import {
   query,
   orderBy,
   serverTimestamp,
+  where
 } from 'firebase/firestore';
 import { db } from '../setFirebase';
 
@@ -69,3 +70,20 @@ export async function fetchMessages(chatId: string): Promise<Message[]> {
   const snapshot = await getDocs(q);
   return snapshot.docs.map(doc => doc.data() as Message);
 }
+
+// 내가 참여한 채팅방 목록 가져오기
+export const fetchMyChats = async (userId: string): Promise<Chat[]> => {
+  console.log("📡 fetchMyChats 호출됨:", userId);
+  const q = query(
+    collection(db, 'chats'),
+    where('participants', 'array-contains', userId),
+    orderBy('lastTimestamp', 'desc')
+  );
+
+  const snap = await getDocs(q);
+
+  return snap.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  } as Chat));
+};
