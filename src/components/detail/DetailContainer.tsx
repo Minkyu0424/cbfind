@@ -4,6 +4,7 @@ import DetailContents from "./DetailContents";
 import DetailUserProfile from "./DetailUserProfile";
 
 import { useEffect, useState } from "react";
+
 import { getPostById } from "../../firebase/api/postApi";
 import type { PostData } from "../../firebase/api/postApi"; 
 import { deletePost } from "../../firebase/api/postApi";
@@ -11,7 +12,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/setFirebase";
 import { useNavigate } from "react-router-dom";
 import { reportPost } from "../../firebase/api/postApi";
-
 import CommentContainer from "./Comment/CommentContainer";
 
 interface DetailContainerProps {
@@ -53,7 +53,6 @@ const DetailContainer = ({ itemId }: DetailContainerProps) => {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        
         const post = await getPostById(itemId);
         setItem(post);
       } catch (error) {
