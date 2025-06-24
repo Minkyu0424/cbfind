@@ -8,6 +8,7 @@ import ItemsFilterDropdown from "./ItemsFilterDropdown";
 
 import { fetchPosts } from "../../firebase/api/postApi";
 import type { PostData } from "../../firebase/api/postApi";
+import defaultImage from "../../defaultImage/defaultImage_find.png"
 
 const FoundItemsContainer = () => {
   const [findPosts, setFindPosts] = useState<PostData[]>([]);
@@ -41,7 +42,7 @@ const FoundItemsContainer = () => {
              id: (post.id ?? '0').toString(), // string → number 변환
               title: post.title,
              content: post.content,
-              image: post.imageUrl || "/default.png",
+              image: post.imageUrl || defaultImage,
              place: post.place.length > 5 ? post.place.slice(0, 5) + '...' : post.place, // content 일부를 위치로 임시 사용
              date: post.timestamp?.toDate().toISOString() || "",
              type: post.type,

@@ -1,9 +1,23 @@
 import { Link } from "react-router-dom";
 import type { UserTypes } from "../../types/common";
+import { reportUser } from "../../firebase/api/userApi"; // 경로는 실제 구조에 맞게
+
 interface UserProfileProps {
   user: UserTypes;
+  authorId: string;
 }
-const DetailUserProfile = ({ user }: UserProfileProps) => {
+
+const DetailUserProfile = ({ user, authorId }: UserProfileProps) => {
+  const handleReportClick = async () => {
+    try {
+      await reportUser(authorId);
+        
+      alert("신고가 접수되었습니다.");
+    } catch {
+      alert("신고 처리에 실패했습니다.");
+    }
+  };
+
   return (
     <div className="w-full flex justify-between items-end border-b border-b-[var(--gray)] pb-2">
       <div className="flex gap-3">
@@ -22,7 +36,13 @@ const DetailUserProfile = ({ user }: UserProfileProps) => {
           </Link>
         </div>
       </div>
-      <img className="w-9 h-9 cursor-pointer" src="/siren.svg" alt="profile" />
+
+      <img 
+        className="w-9 h-9 cursor-pointer"
+        src="/siren.svg"
+        alt="신고"
+        onClick={handleReportClick}
+      />
     </div>
   );
 };

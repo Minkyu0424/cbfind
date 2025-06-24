@@ -10,6 +10,9 @@ import { deletePost } from "../../firebase/api/postApi";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/setFirebase";
 import { useNavigate } from "react-router-dom";
+import { reportPost } from "../../firebase/api/postApi";
+
+import CommentContainer from "./Comment/CommentContainer";
 
 interface DetailContainerProps {
   itemId: string;
@@ -35,12 +38,23 @@ const DetailContainer = ({ itemId }: DetailContainerProps) => {
     }
   };
 
+  const handleReport = async () => {
+  if (!confirm("이 게시글을 신고하시겠습니까?")) return;
+
+  try {
+    await reportPost(itemId);
+    alert("신고가 접수되었습니다.");
+  } catch (error) {
+    console.error("신고 실패:", error);
+    alert("신고 중 오류가 발생했습니다.");
+  }
+};
+
   useEffect(() => {
     const fetchItem = async () => {
       try {
         
         const post = await getPostById(itemId);
-        
         setItem(post);
       } catch (error) {
         console.error("게시글 로드 실패:", error);
@@ -58,7 +72,8 @@ const DetailContainer = ({ itemId }: DetailContainerProps) => {
 
   return (
     <div className="flex flex-col gap-3">
-       <DetailUserProfile user={item.user} />
+       <DetailUserProfile user={item.user} authorId={item.authorId} />
+       <div className="flex justify-end items-center gap-3 mt-2">
        {user?.uid === item?.authorId && (
         <button
           onClick={handleDelete}
@@ -67,7 +82,13 @@ const DetailContainer = ({ itemId }: DetailContainerProps) => {
           삭제하기
         </button>
       )}
-       <img className="w-9 h-9 cursor-pointer" src="/siren.svg" alt="profile" />
+       <img       
+  className="w-9 h-9 cursor-pointer self-end"
+  src="/siren.svg"
+  alt="신고하기"
+  onClick={handleReport}
+/>
+</div>
        {
   item.imageUrl && item.imageUrl.startsWith("http") ? (
     <img
@@ -91,6 +112,7 @@ const DetailContainer = ({ itemId }: DetailContainerProps) => {
     type: item.type
     }}
 />
+<CommentContainer />
       <CommonContents />
     </div>
   );
