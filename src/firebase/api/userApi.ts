@@ -14,8 +14,8 @@ export type UserInfo = {
   studentId: string;
   email: string;
   isAdmin: boolean;
-  agreedToPolicy: boolean
-  reportCount: number
+  agreedToPolicy: boolean;
+  reportCount: number;
 };
 
 // 회원가입
@@ -34,7 +34,11 @@ export async function signUpUser({
   agreedToPolicy: boolean;
   reportCount: number;
 }): Promise<void> {
-  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
   const uid = userCredential.user.uid;
 
   const userData: UserInfo = {

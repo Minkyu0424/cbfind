@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
 import { MockOptions } from "../../constants/items";
-import { MockItems } from "../../constants/mock";
 import Item from "../common/Item";
 import Pagination from "../common/Pagination";
 import MainItemContainerHeader from "../main/MainItemContainerHeader";
 import ItemsFilterDropdown from "./ItemsFilterDropdown";
 
-import { fetchPosts } from "../../firebase/api/postApi";
+import defaultImage from "../../defaultImage/defaultImage_find.png";
 import type { PostData } from "../../firebase/api/postApi";
-import defaultImage from "../../defaultImage/defaultImage_find.png"
+import { fetchPosts } from "../../firebase/api/postApi";
 
 const FoundItemsContainer = () => {
   const [findPosts, setFindPosts] = useState<PostData[]>([]);
-  
-    useEffect(() => {
+
+  useEffect(() => {
     const fetchLost = async () => {
       try {
         const posts = await fetchPosts("lost");
@@ -22,7 +21,7 @@ const FoundItemsContainer = () => {
         console.error("게시글 불러오기 실패:", error);
       }
     };
-  
+
     fetchLost();
   }, []);
 
@@ -37,26 +36,28 @@ const FoundItemsContainer = () => {
       <div className="flex px-2 gap-y-5 justify-between flex-wrap pt-5 pb-3">
         {findPosts.slice(0, 9).map((post) => (
           <Item
-           key={String(post.id)}
+            key={String(post.id)}
             item={{
-             id: (post.id ?? '0').toString(), // string → number 변환
+              id: (post.id ?? "0").toString(), // string → number 변환
               title: post.title,
-             content: post.content,
+              content: post.content,
               image: post.imageUrl || defaultImage,
-             place: post.place.length > 5 ? post.place.slice(0, 5) + '...' : post.place, // content 일부를 위치로 임시 사용
-             date: post.timestamp?.toDate().toISOString() || "",
-             type: post.type,
-             user: {
+              place:
+                post.place.length > 5
+                  ? post.place.slice(0, 5) + "..."
+                  : post.place, // content 일부를 위치로 임시 사용
+              date: post.timestamp?.toDate().toISOString() || "",
+              type: post.type,
+              user: {
                 id: 0, // 아직 실제 유저 객체 없으니 임시값
                 name: post.authorId,
-               profileImage: "/default-profile.png",
-             },
-             views: 0,
+                profileImage: "/default-profile.png",
+              },
+              views: 0,
               chatCount: 0,
             }}
-         />
+          />
         ))}
-        
       </div>
       <Pagination currentPage={page} totalPages={5} onPageChange={setPage} />
     </div>
