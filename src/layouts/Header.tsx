@@ -1,8 +1,46 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { auth, db } from "../firebase/setFirebase";
+import { doc, getDoc } from "firebase/firestore";
+import { signOut } from "firebase/auth";
 
 const Header = () => {
   const [isClicked, setIsClicked] = useState(false);
+  const [userName, setUserName] = useState<string>("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserName = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      try {
+        const docRef = doc(db, "users", user.uid);
+        const snapshot = await getDoc(docRef);
+
+        if (snapshot.exists()) {
+          const data = snapshot.data();
+          setUserName(data.name || "");
+        }
+      } catch (error) {
+        console.error("유저 이름 불러오기 실패:", error);
+      }
+    };
+
+    fetchUserName();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      alert("로그아웃 되었습니다.");
+      navigate("/login");
+    } catch (error) {
+      console.error("로그아웃 실패:", error);
+      alert("로그아웃 실패");
+    }
+  };
+
   return (
     <div className="w-full px-3 py-4 flex justify-between items-center">
       <Link to="/" className="flex gap-3 items-center">
@@ -14,16 +52,16 @@ const Header = () => {
           onClick={() => setIsClicked(!isClicked)}
           className="text-sm font-medium cursor-pointer"
         >
-          공주맛밤님
+          {userName ? `${userName}님` : "로그인 중..."}
         </p>
         {isClicked && (
           <div className="absolute top-7 left-9 flex flex-col text-xs font-medium border border-[var(--sub)]/80 bg-white rounded z-10">
-            <Link
+            <button
               className="px-2.5 pt-2 pb-1.5 text-center hover:bg-zinc-200"
-              to={"/login"}
+              onClick={handleLogout}
             >
               로그아웃
-            </Link>
+            </button>
             <Link
               className="px-2.5 pt-1.5 pb-2 text-center hover:bg-zinc-200"
               to={""}

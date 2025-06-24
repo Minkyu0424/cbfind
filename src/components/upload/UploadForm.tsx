@@ -7,6 +7,8 @@ import Modal from "../common/Modal";
 
 import { uploadImageToStorage } from "../../utils/uploadImage";
 import { uploadPostToFirestore } from "../../utils/uploadPost";
+import { auth, db } from "../../firebase/setFirebase";
+import { doc, getDoc } from "firebase/firestore";
 
 interface UploadFormProps {
   isFound: boolean;
@@ -29,10 +31,31 @@ const UploadForm = ({ isFound }: UploadFormProps) => {
         imageUrl = await uploadImageToStorage(uploadForm.image);
       }
 
-      const uploadData = {
-        ...uploadForm,
-        image: imageUrl,
-      };
+      // 2. 현재 로그인한 유저 가져오기
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+    if (!userDoc.exists()) {
+      alert("유저 정보를 찾을 수 없습니다.");
+      return;
+    }
+
+    const userData = userDoc.data();
+
+    const uploadData = {
+      ...uploadForm,
+      image: imageUrl,
+      user: {
+        name: userData.name,
+        studentId: userData.studentId,
+        email: userData.email,
+        isAdmin: userData.isAdmin,
+      },
+    };
 
       await uploadPostToFirestore(uploadData, isFound);
       setShowModal(true);
