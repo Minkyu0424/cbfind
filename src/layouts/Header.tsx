@@ -3,11 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase/setFirebase";
 import { doc, getDoc } from "firebase/firestore";
 import { signOut } from "firebase/auth";
+import { ShieldCheck } from "lucide-react";
 
 
 const Header = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [userName, setUserName] = useState<string>("");
+  const [isAdmin, setIsAdmin] = useState<boolean>(false); // 관리자 여부
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,6 +24,7 @@ const Header = () => {
         if (snapshot.exists()) {
           const data = snapshot.data();
           setUserName(data.name || "");
+          setIsAdmin(data.isAdmin === true); // 관리자 여부 설정
         }
       } catch (error) {
         console.error("유저 이름 불러오기 실패:", error);
@@ -70,18 +73,26 @@ const Header = () => {
           </div>
         )}
 
-        <img
+        
+        {isAdmin ? (
+          <Link to="/admin" className="relative flex pr-1 cursor-pointer">
+            <ShieldCheck className="w-6 h-6 text-blue-800" />
+          </Link>
+        ) : (
+          
+          <div className="relative flex pr-1 cursor-pointer">
+            <img
           src="/ci_chat.svg"
           alt="chat SVG"
           className="w-6 h-6 cursor-pointer"
           onClick={handleClick}
         />
-        <div className="relative flex pr-1 cursor-pointer">
-          <img src="/Frame.svg" alt="alarm SVG" className="w-6 h-5.5"/>
-          <div className="flex items-center justify-center text-[10px] w-4 h-4 absolute right-0.5 top-[-2px] bg-red-600 rounded-full text-white">
-            13
+            <img src="/Frame.svg" alt="alarm SVG" className="w-6 h-5.5" />
+            <div className="flex items-center justify-center text-[10px] w-4 h-4 absolute right-0.5 top-[-2px] bg-red-600 rounded-full text-white">
+              13
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

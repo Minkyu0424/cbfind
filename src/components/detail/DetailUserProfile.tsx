@@ -4,10 +4,9 @@ import { reportUser } from "../../firebase/api/userApi";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/setFirebase";
 
-
 interface UserProfileProps {
   user: UserTypes;
-  openModal: () => void;
+  authorId: string;
 }
 
 const DetailUserProfile = ({ user, authorId }: UserProfileProps) => {
@@ -28,7 +27,7 @@ const DetailUserProfile = ({ user, authorId }: UserProfileProps) => {
       <div className="flex gap-3">
         <img
           className="w-12 h-12 rounded-full border-2 border-[var(--main)]"
-          src={user.profileImage || "/woowang.png"}
+          src={user.profileImage || '/woowang.png'}
           alt="profile"
         />
         <div className="flex flex-col gap-1">
@@ -44,11 +43,12 @@ const DetailUserProfile = ({ user, authorId }: UserProfileProps) => {
           )}
         </div>
       </div>
-      <img
-        className="w-8 h-8 cursor-pointer"
+
+      <img 
+        className="w-9 h-9 cursor-pointer"
         src="/siren.svg"
         alt="신고"
-        onClick={openModal}
+        onClick={handleReportClick}
       />
     </div>
   );

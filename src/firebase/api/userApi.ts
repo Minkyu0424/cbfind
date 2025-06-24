@@ -16,6 +16,7 @@ export type UserInfo = {
   isAdmin: boolean;
   agreedToPolicy: boolean;
   reportCount: number;
+  isBanned: false;
 };
 
 // 회원가입
@@ -25,7 +26,8 @@ export async function signUpUser({
   email,  
   password,
   agreedToPolicy,
-  reportCount
+  reportCount,
+  isBanned
 }: {
   name: string;
   studentId: string;
@@ -33,6 +35,7 @@ export async function signUpUser({
   password: string;
   agreedToPolicy: boolean;
   reportCount: number;
+  isBanned: boolean;
 }): Promise<void> {
   const userCredential = await createUserWithEmailAndPassword(
     auth,
@@ -47,7 +50,8 @@ export async function signUpUser({
     email,
     isAdmin: false, // 기본값: 일반 사용자
     agreedToPolicy: false,
-    reportCount: 0
+    reportCount: 0,
+    isBanned: false
   };
 
   await setDoc(doc(db, 'users', uid), userData);
@@ -98,4 +102,11 @@ export const getUserNameById = async (userId: string): Promise<string> => {
     return snap.data().name || "알 수 없음";
   }
   return "알 수 없음";
+};
+
+//isAdmin?
+export const isAdminUser = async (uid: string): Promise<boolean> => {
+  const userDoc = await getDoc(doc(db, "users", uid));
+  const data = userDoc.data();
+  return data?.isAdmin === true;
 };

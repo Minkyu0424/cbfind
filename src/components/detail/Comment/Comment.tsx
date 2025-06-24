@@ -22,8 +22,6 @@ const Comment = ({ user, comment }: CommentProps) => {
           <p className="font-semibold">{user.name}</p>
         </div>
         <div className="flex gap-1 font-smibold">
-          <p className="cursor-pointer">채팅</p>
-          <p className="cursor-pointer">신고</p>
         </div>
       </div>
       <p className="w-full flex">{comment.content}</p>

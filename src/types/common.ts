@@ -38,4 +38,5 @@ export interface CommentTypes {
   commentId: number;
   content: string;
   createdAt: string;
+  user: UserTypes;
 }
