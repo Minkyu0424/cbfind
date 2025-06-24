@@ -20,4 +20,5 @@ export const InitSignUpFormData = {
   password: "",
   email: "",
   agreedToPolicy: false,
+  reportCount: 0,
 };
