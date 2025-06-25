@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../firebase/setFirebase';
+import { auth, db } from '../firebase/setFirebase';
 import { useNavigate } from 'react-router-dom';
 import {
   getOrCreateChat,
@@ -9,6 +9,14 @@ import {
   sendMessage,
   type Message,
 } from '../firebase/api/chatApi';
+import {
+  doc,
+  setDoc,
+  increment,
+  serverTimestamp,
+  collection,
+  onSnapshot,
+} from 'firebase/firestore';
 
 const ChatRoom = () => {
   const { id: otherUserId } = useParams(); // 상대방 UID
@@ -24,12 +32,17 @@ const ChatRoom = () => {
 
     const setupChat = async () => {
       const newChatId = await getOrCreateChat(user.uid, otherUserId);
-      console.log(user.uid);
-      console.log(otherUserId);
       setChatId(newChatId);
 
       const loadedMessages = await fetchMessages(newChatId);
       setMessages(loadedMessages);
+
+      // ✅ 채팅방에 입장하면 알림 초기화
+      await setDoc(
+        doc(db, 'users', user.uid, 'unreadChats', newChatId),
+        { count: 0 },
+        { merge: true }
+      );
     };
 
     setupChat();
@@ -47,6 +60,20 @@ const ChatRoom = () => {
     setText('');
     const updated = await fetchMessages(chatId);
     setMessages(updated);
+
+    // ✅ 상대방에게 알림 전송
+    if (otherUserId) {
+      await setDoc(
+        doc(db, 'users', otherUserId, 'unreadChats', chatId),
+        {
+          from: user.uid,
+          lastMessage: text,
+          timestamp: serverTimestamp(),
+          count: increment(1),
+        },
+        { merge: true }
+      );
+    }
   };
 
   return (
