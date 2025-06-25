@@ -9,6 +9,7 @@ export interface ItemTypes {
   views: number;
   chatCount: number;
   type: string;
+  isCompleted: boolean;
 }
 
 export type UserTypes = {
@@ -38,4 +39,5 @@ export interface CommentTypes {
   commentId: number;
   content: string;
   createdAt: string;
+  user: UserTypes;
 }

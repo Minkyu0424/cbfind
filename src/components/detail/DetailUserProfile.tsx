@@ -4,19 +4,19 @@ import { reportUser } from "../../firebase/api/userApi";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/setFirebase";
 
-
 interface UserProfileProps {
   user: UserTypes;
-  openModal: () => void;
+  authorId: string;
+  openModal?: () => void;
 }
 
-const DetailUserProfile = ({ user, authorId }: UserProfileProps) => {
+const DetailUserProfile = ({ user, authorId, openModal }: UserProfileProps) => {
   const [currentUser] = useAuthState(auth);
 
   const handleReportClick = async () => {
+    console.log(authorId);
     try {
       await reportUser(authorId);
-
       alert("신고가 접수되었습니다.");
     } catch {
       alert("신고 처리에 실패했습니다.");
@@ -28,7 +28,7 @@ const DetailUserProfile = ({ user, authorId }: UserProfileProps) => {
       <div className="flex gap-3">
         <img
           className="w-12 h-12 rounded-full border-2 border-[var(--main)]"
-          src={user.profileImage || "/woowang.png"}
+          src={user.profileImage || '/woowang.png'}
           alt="profile"
         />
         <div className="flex flex-col gap-1">
@@ -41,14 +41,15 @@ const DetailUserProfile = ({ user, authorId }: UserProfileProps) => {
             >
               채팅
             </Link>
-          )}
+          )}    
         </div>
       </div>
-      <img
-        className="w-8 h-8 cursor-pointer"
+
+      <img 
+        className="w-9 h-9 cursor-pointer"
         src="/siren.svg"
         alt="신고"
-        onClick={openModal}
+        onClick={() => openModal?.()}
       />
     </div>
   );

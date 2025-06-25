@@ -9,9 +9,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import type { PostData } from "../../firebase/api/postApi";
 import { deletePost, getPostById } from "../../firebase/api/postApi";
-import { auth } from "../../firebase/setFirebase";
+import { auth, db } from "../../firebase/setFirebase";
 import CommentContainer from "./Comment/CommentContainer";
 import ReportModal from "./ReportModal";
+import { updateDoc, doc } from "firebase/firestore";
 
 interface DetailContainerProps {
   itemId: string;
@@ -37,6 +38,23 @@ const DetailContainer = ({ itemId }: DetailContainerProps) => {
       }
     }
   };
+
+  const handleComplete = async () => {
+  if (confirm("이 게시글을 완료 처리하시겠습니까?")) {
+    try {
+      const postRef = doc(db, "posts", itemId);
+      await updateDoc(postRef, {
+        isCompleted: true
+      });
+      alert("게시글이 완료 처리되었습니다.");
+      // 옵션: navigate("/") 또는 새로고침
+    } catch (error) {
+      console.error("완료 처리 실패:", error);
+      alert("게시글 완료 중 오류가 발생했습니다.");
+    }
+  }
+};
+
   const openModal = () => {
     setIsOpen(true);
   };
@@ -62,16 +80,27 @@ const DetailContainer = ({ itemId }: DetailContainerProps) => {
 
   return (
     <div className="flex flex-col gap-3">
-      <DetailUserProfile user={item.user} openModal={openModal} />
+      <DetailUserProfile user={item.user} authorId={item.authorId} openModal={openModal}/>
       <div className="flex justify-end items-center gap-3 mt-2">
         {user?.uid === item?.authorId && (
-          <button
-            onClick={handleDelete}
-            className="mt-2 px-4 py-2 bg-red-500 text-white rounded self-end"
-          >
-            삭제하기
-          </button>
-        )}
+  <div className="flex gap-2 mt-2">
+    <button
+      onClick={handleDelete}
+      className="text-sm px-3 py-1.5 rounded text-white"
+      style={{ backgroundColor: "#960051" }} // 충북대 자주색
+    >
+      삭제하기
+    </button>
+    <button
+      onClick={handleComplete}
+      className="text-sm px-3 py-1.5 rounded text-white"
+      style={{ backgroundColor: "#5A0D36" }} // 충북대 보조 자주톤
+    >
+      완료하기
+    </button>
+  </div>
+)}
+
       </div>
       {item.imageUrl && item.imageUrl.startsWith("http") ? (
         <img
@@ -92,6 +121,7 @@ const DetailContainer = ({ itemId }: DetailContainerProps) => {
           views: item.views || 0,
           chatCount: item.chatCount || 0,
           type: item.type,
+          isCompleted: item.isCompleted
         }}
       />
       {isOpen && (

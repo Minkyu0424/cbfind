@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Detail from "../pages/Detail";
 import Items from "../pages/Items";
 import Login from "../pages/Login";
@@ -8,9 +8,10 @@ import Search from "../pages/Search";
 import SignUp from "../pages/SignUp";
 import ChatRoom from '../pages/ChatRoom';
 import ChatList from "../pages/ChatList";
+import AdminReportPage from "../pages/AdminReport";
 
 const AppRouter = () => (
-  <BrowserRouter>
+  
     <Routes>
       <Route path="/" element={<Main />} />
       <Route path="/login" element={<Login />} />
@@ -21,8 +22,9 @@ const AppRouter = () => (
       <Route path="/signup" element={<SignUp />} />
       <Route path="/chat/:id" element={<ChatRoom />} />
       <Route path="/chats" element={<ChatList />} />
+      <Route path="/admin" element={<AdminReportPage />} />
     </Routes>
-  </BrowserRouter>
+  
 );
 
 export default AppRouter;

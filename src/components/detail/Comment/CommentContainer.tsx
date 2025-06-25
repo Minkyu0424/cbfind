@@ -1,18 +1,48 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MockComments } from "../../../constants/mock";
 import Comment from "./Comment";
+import { addComment, fetchComments } from "../../../firebase/api/commentApi";
+import { auth } from "../../../firebase/setFirebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-const CommentContainer = () => {
+interface CommentContainerProps {
+  postId: string;
+}
+
+const CommentContainer = ({ postId }: CommentContainerProps) => {
+  const [commentList, setCommentList] = useState<any[]>([]);
+  const [user] = useAuthState(auth);
   const [comment, setComment] = useState("");
-  const submitComment = () => {
-    if (!comment) {
+
+  const loadComments = async () => {
+    const comments = await fetchComments(postId);
+    setCommentList(comments);
+  };
+
+  useEffect(() => {
+    loadComments();
+  }, [postId]);
+
+  const submitComment = async () => {
+    if (!user) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    if (!comment.trim()) {
       alert("댓글을 입력해주세요.");
       return;
     }
-    // 여기에 댓글 제출 로직을 추가해 학준아
-    console.log("댓글 제출:", comment);
+
+    await addComment(postId, {
+      authorId: user.uid,
+      content: comment.trim(),
+    });
+
     setComment("");
+    loadComments(); // 댓글 목록 다시 불러오기
   };
+
   return (
     <div className="flex flex-col">
       <div className="relative size-full">
@@ -30,6 +60,13 @@ const CommentContainer = () => {
         />
       </div>
       <div className="flex flex-col w-full gap-3 px-2 pt-3">
+        {commentList.length === 0 ? (
+          <p className="text-sm text-gray-500">작성된 댓글이 없습니다.</p>
+        ) : (
+          commentList.map((comment) => (
+            <Comment key={comment.id} user={comment.authorId} comment={comment.content} />
+          ))
+        )}
         {MockComments.map((comment) => (
           <Comment user={comment.user} comment={comment.comment} />
         ))}

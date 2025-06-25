@@ -24,7 +24,9 @@ const ChatList = () => {
     const chatsWithNames = await Promise.all(
       rawChats.map(async (chat) => {
         const otherId = chat.participants.find((p) => p !== user.uid) ?? "";
+        
         const otherName = await getUserNameById(otherId); // 이름 가져오기
+        console.log(rawChats);
         return { ...chat, otherName };
       })
     );
