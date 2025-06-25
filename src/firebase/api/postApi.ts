@@ -38,6 +38,7 @@ export type PostData = {
   views?: number;   
   chatCount?: number;
   reportCount?: number;
+  isCompleted: boolean;
 };
 
 const postsRef = collection(db, 'posts');

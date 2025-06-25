@@ -24,6 +24,8 @@ const ChatRoom = () => {
 
     const setupChat = async () => {
       const newChatId = await getOrCreateChat(user.uid, otherUserId);
+      console.log(user.uid);
+      console.log(otherUserId);
       setChatId(newChatId);
 
       const loadedMessages = await fetchMessages(newChatId);

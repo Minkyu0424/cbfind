@@ -86,6 +86,7 @@ export async function deleteUserAccount(): Promise<void> {
 export const reportUser = async (userId: string) => {
   try {
     const userRef = doc(db, "users", userId); // "users"는 유저 컬렉션 이름
+    console.log(userRef);
     await updateDoc(userRef, {
       reportCount: increment(1),
     });

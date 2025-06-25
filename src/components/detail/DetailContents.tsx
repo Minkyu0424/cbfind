@@ -8,11 +8,18 @@ interface DetailContentsProps {
 const DetailContents = ({ data }: DetailContentsProps) => {
   const { date, time } = formatDateToKoreanStyle(data.date);
 
+  console.log(data);
+
   const timeLabel = data.type === "lost" ? "분실시간" : "습득시간";
   return (
     <div>
       <div className="w-full flex justify-between items-end">
         <p className="text-lg font-bold">{data.title}</p>
+        {data.isCompleted && (
+    <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">
+      ✅ 완료됨
+    </span>
+  )}
         <div className="flex text-xs gap-1 font-medium text-[var(--sub)]">
           <p className="text-black font-medium">{timeLabel} :</p>
           <p>{date +' '+ time}</p>

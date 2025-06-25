@@ -9,6 +9,7 @@ export interface ItemTypes {
   views: number;
   chatCount: number;
   type: string;
+  isCompleted: boolean;
 }
 
 export type UserTypes = {
